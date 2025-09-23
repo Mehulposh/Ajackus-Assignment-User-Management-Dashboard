@@ -1,33 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState , useEffect} from 'react'
+import Header from './components/Header/Header'
+import UserCard from './components/UserCard/UserCard'
+import { getUsers } from './api/apiCalls'
+import Filter from './components/Filter/Filter'
+import SearchBar from './components/SearchBar/SearchBar'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([])
+  const [filter, setFilter] = useState('')
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+   const fetchUser = async () => {
+    try {
+      const response = await getUsers();
+      console.log(response);
+      setData(response)
+    } catch (error) {
+      console.log(error);
+      
+    }
+   }
+
+   fetchUser();
+  },[])
+
+  // Filter and search logic
+  
+  const filteredData = data.filter(user => {
+  // Search logic - searches across multiple fields
+  const matchesSearch = !query || 
+    user.name?.toLowerCase().includes(query.toLowerCase()) ||
+    user.email?.toLowerCase().includes(query.toLowerCase()) ||
+    user.department?.toLowerCase().includes(query.toLowerCase());
+  
+  // Filter logic - filters by specific field based on selected filter
+  let matchesFilter = true;
+  
+  if (filter && filter !== "") {
+    switch(filter) {
+      case "First Name":
+        matchesFilter = user.name?.toLowerCase().includes(query.toLowerCase());
+        break;
+      case "Last Name":
+        matchesFilter = user.name?.toLowerCase().includes(query.toLowerCase());
+        break;
+      case "Email":
+        matchesFilter = user.email?.toLowerCase().includes(query.toLowerCase());
+        break;
+      case "Department":
+        matchesFilter = user.department?.toLowerCase().includes(query.toLowerCase());
+        break;
+      default:
+        matchesFilter = true;
+    }
+  }
+  
+  return matchesSearch && matchesFilter;
+});
+
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Header/>
+    <div className='p-5'>
+      <SearchBar query={query} setQuery={setQuery}/>
+      <Filter setFilter= {setFilter}/>
+    
+      <div className='flex flex-wrap gap-4 mt-5 '>
+        {filteredData.map(user => (
+          <UserCard user={user} key={user.id}/>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    </div>
     </>
   )
 }
