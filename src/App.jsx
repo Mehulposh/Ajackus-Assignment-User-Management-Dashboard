@@ -62,6 +62,8 @@ function App() {
   
   return matchesSearch && matchesFilter;
 });
+  
+  const userToEdit = editId ? data.find(user => user.id === editId) : null
 
   const onDelete = (id) => {
     setData(prevData => prevData.filter(user => user.id !== id));
@@ -73,13 +75,20 @@ function App() {
       <SearchBar query={query} setQuery={setQuery}/>
       <Filter setFilter= {setFilter}/>
       <Button 
-        className='bg-blue-500 px-3 text-white rounded py-1'
-        onClick={() => setopen(true)}>
-        Add
+        className='bg-blue-500 px-3 text-white rounded py-1 mt-3'
+        onClick={() => setopen(prev => !prev)}>
+        {editId ? 'Edit' : 'Add' }
       </Button>
 
       {open && (
-        <Form setData={setData}/>
+        <div className='absolute bg-white right-[40%]  p-4 rounded'>
+          <Form 
+            setData={setData} 
+            setopen={setopen} 
+            userToEdit={userToEdit} 
+            setEditId={setEditId}
+            />
+        </div>
       )}
       <div className='flex flex-wrap gap-4 mt-5 '>
         {filteredData.map(user => (

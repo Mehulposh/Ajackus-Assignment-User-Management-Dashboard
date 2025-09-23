@@ -26,7 +26,10 @@ export const deleteUser = async (id) => {
 
 export const updateUser = async (id,data) => {
     try {
-        const response = await axios.put(`${BASE_URL}/users/${id}`,data);
+        const response = await axios.put(`${BASE_URL}/users/${id}`,{
+            name: data.name,
+            email: data.email
+        });
         return response
     } catch (error) {
         console.log(error);
