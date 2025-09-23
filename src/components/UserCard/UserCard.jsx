@@ -1,17 +1,45 @@
 import React from 'react'
 import Button  from '../Button/Buttton'
-const UserCard = ({user}) => {
+import { deleteUser } from '../../api/apiCalls'
+
+
+const UserCard = ({user,setEditId,onDelete}) => {
+    const handleEdit = (id) => {
+        setEditId(id)
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            const response =  await deleteUser(id);
+            if(response){
+                onDelete(id)
+                alert('User Deleted')
+            }
+           
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
   return (
     <div>
         <div className={`w-[350px] p-3 rounded bg-gray-300`}>
         <h2>Name: {user.name}</h2>
         <p>Email: {user.email}</p>
         <p>Age: {user.age}</p>
-        {/* <p>Department: {user./></p> */}
+        <p>Department:</p>
         
-        <div>
-            <Button>Edit</Button>
-            <Button>Delete</Button>
+        <div className='space-x-3 mt-3'>
+            <Button 
+                onClick = {() => handleEdit(user.id)}
+                className='bg-blue-500 px-3 text-white rounded py-1 '
+            > 
+                Edit
+            </Button>
+            <Button 
+                className='bg-blue-500 px-3 text-white rounded py-1 '
+                onClick = {() => handleDelete(user.id)}    
+            >Delete</Button>
         </div>
 
     </div>  

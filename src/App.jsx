@@ -9,6 +9,7 @@ function App() {
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [query, setQuery] = useState('')
+  const [editId, setEditId] = useState()
 
   useEffect(() => {
    const fetchUser = async () => {
@@ -59,7 +60,9 @@ function App() {
   return matchesSearch && matchesFilter;
 });
 
-
+  const onDelete = (id) => {
+    setData(prevData => prevData.filter(user => user.id !== id));
+  }
   return (
     <>
     <Header/>
@@ -69,7 +72,7 @@ function App() {
     
       <div className='flex flex-wrap gap-4 mt-5 '>
         {filteredData.map(user => (
-          <UserCard user={user} key={user.id}/>
+          <UserCard user={user} key={user.id} setEditId={setEditId}  onDelete={onDelete} />
         ))}
       </div>
     </div>

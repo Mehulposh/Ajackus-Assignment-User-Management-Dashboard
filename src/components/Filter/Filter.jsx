@@ -5,7 +5,7 @@ const category = ["First Name", "Last Name", "Email", "Department"]
 
 const Filter = ({setFilter}) => {
   return (
-    <div className='border w-1/2 mt-5 ml-4'>
+    <div className='border w-1/10 rounded mt-5 ml-4'>
         <select className='w-full' onChange={(e) => setFilter(e.target.value)}>
             <option value="">Select filter</option>
             {category.map((opt,idx) => (
