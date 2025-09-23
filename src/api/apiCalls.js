@@ -1,0 +1,48 @@
+import axios from 'axios'
+
+const BASE_URL = 'https://jsonplaceholder.typicode.com'
+
+
+export const getUsers = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/users`);
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+export const deleteUser = async (id) => {
+    try {
+        const response = await axios.delete(`${BASE_URL}/users/${id}`);
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const updateUser = async (id,data) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/users/${id}`,data);
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+} 
+
+
+export const addUser = async (data) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/users`,data);
+        return response
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
