@@ -4,12 +4,15 @@ import UserCard from './components/UserCard/UserCard'
 import { getUsers } from './api/apiCalls'
 import Filter from './components/Filter/Filter'
 import SearchBar from './components/SearchBar/SearchBar'
+import Button from './components/Button/Button'
+import Form from './components/Form/Form'
 
 function App() {
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [query, setQuery] = useState('')
   const [editId, setEditId] = useState()
+  const [open, setopen] = useState(false)
 
   useEffect(() => {
    const fetchUser = async () => {
@@ -69,7 +72,15 @@ function App() {
     <div className='p-5'>
       <SearchBar query={query} setQuery={setQuery}/>
       <Filter setFilter= {setFilter}/>
-    
+      <Button 
+        className='bg-blue-500 px-3 text-white rounded py-1'
+        onClick={() => setopen(true)}>
+        Add
+      </Button>
+
+      {open && (
+        <Form setData={setData}/>
+      )}
       <div className='flex flex-wrap gap-4 mt-5 '>
         {filteredData.map(user => (
           <UserCard user={user} key={user.id} setEditId={setEditId}  onDelete={onDelete} />

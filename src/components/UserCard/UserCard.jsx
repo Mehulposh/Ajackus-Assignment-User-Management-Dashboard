@@ -1,5 +1,5 @@
 import React from 'react'
-import Button  from '../Button/Buttton'
+import Button  from '../Button/Button'
 import { deleteUser } from '../../api/apiCalls'
 
 

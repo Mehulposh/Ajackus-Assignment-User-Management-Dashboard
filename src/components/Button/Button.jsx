@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Buttton = ({children,...props}) => {
+const Button = ({children,...props}) => {
   return (
     <button {...props}>
         {children}
@@ -8,4 +8,4 @@ const Buttton = ({children,...props}) => {
   )
 }
 
-export default Buttton
+export default Button
