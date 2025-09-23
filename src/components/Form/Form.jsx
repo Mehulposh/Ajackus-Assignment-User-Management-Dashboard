@@ -8,12 +8,12 @@ const Form = ({setData,setopen,userToEdit,setEditId}) => {
         age: '',
         email: '',
         department: ''
-    })
+    })//form-data state to store the details for new user and user to be edited
 
-    const [inActive, setInActive] = useState(false)
+    const [inActive, setInActive] = useState(false)//flag to disable the cancel button
 
     useEffect(() => {
-        
+        //pre-filling the the data of the user to be edited
         if (userToEdit) {
             setFormData({
             name: userToEdit.name || "",
@@ -26,19 +26,24 @@ const Form = ({setData,setopen,userToEdit,setEditId}) => {
 
 
     const handleCancel = () => {
+        //close the form for adding new user
         setopen(false);
+
+        //remove the id to be edited if set
         setEditId(null);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        //flag to set the cancel button inactive while the api is being called
         setInActive(true)
+
         try {
 
             if(userToEdit){
-                const response = await updateUser(userToEdit.id,formData);
-                console.log(response);
-                
+                const response = await updateUser(userToEdit.id,formData);//calling the api function to update the user details
+                                
                 if(response.status === 200){
                     alert('User Updated Successfully')
                     setData((prev) =>
@@ -48,7 +53,7 @@ const Form = ({setData,setopen,userToEdit,setEditId}) => {
                     alert('Error Updating the User')
                 }
             }else{
-                const response = await addUser(formData);
+                const response = await addUser(formData);//caaling the api function to add new user
                 if(response.status === 201){
                     alert('New User Added')
                     setData(prev => [...prev, response.data]);
@@ -62,11 +67,12 @@ const Form = ({setData,setopen,userToEdit,setEditId}) => {
             console.log(error);
             
         }finally{
+            //closing the open form after completion of the process
             setopen(false)
             setInActive(false)
         }
         
-
+        //setting the formdata state to empty after the user is added or updated
         setFormData({
         name: '',
         age: '',

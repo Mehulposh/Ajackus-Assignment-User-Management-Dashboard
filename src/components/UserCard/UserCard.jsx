@@ -23,8 +23,10 @@ const UserCard = ({user,setEditId,onDelete}) => {
         }
     }
 
-    // 🔹 Pick random department if none exists
+    // Pick random department if none exists
     const randomDepartment = user.department || departments[Math.floor(Math.random() * departments.length)];
+    
+    // Create random age if none exists
     const randomAge = user.age || Math.floor(Math.random() * (60 - 20 + 1)) + 20;
 
 

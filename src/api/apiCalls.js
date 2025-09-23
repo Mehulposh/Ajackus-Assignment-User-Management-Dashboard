@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'https://jsonplaceholder.typicode.com'
+const BASE_URL = 'https://jsonplaceholder.typicode.com'//base url of the api
 
 
 export const getUsers = async () => {

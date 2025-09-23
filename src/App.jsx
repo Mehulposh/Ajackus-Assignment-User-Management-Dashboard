@@ -14,11 +14,11 @@ function App() {
   const [editId, setEditId] = useState()
   const [open, setopen] = useState(false)
 
+  //useEffect to fetch all the users data from the api
   useEffect(() => {
    const fetchUser = async () => {
     try {
-      const response = await getUsers();
-      console.log(response);
+      const response = await getUsers();//calling the api function to fetch all the users 
       setData(response)
     } catch (error) {
       console.log(error);
@@ -63,11 +63,14 @@ function App() {
   return matchesSearch && matchesFilter;
 });
   
+//find the user data to edit
   const userToEdit = editId ? data.find(user => user.id === editId) : null
 
+  //filter the current data to remove the deleted user
   const onDelete = (id) => {
     setData(prevData => prevData.filter(user => user.id !== id));
   }
+
   return (
     <>
     <Header/>
