@@ -8,11 +8,11 @@ import Button from './components/Button/Button'
 import Form from './components/Form/Form'
 
 function App() {
-  const [data, setData] = useState([])
-  const [filter, setFilter] = useState('')
-  const [query, setQuery] = useState('')
-  const [editId, setEditId] = useState()
-  const [open, setopen] = useState(false)
+  const [data, setData] = useState([])//state to store the fetched data
+  const [filter, setFilter] = useState('')//state to strore the filter value
+  const [query, setQuery] = useState('')//state to store the search query
+  const [editId, setEditId] = useState()//state to store id to be  edited
+  const [open, setopen] = useState(false)//flag to open the new user form
 
   //useEffect to fetch all the users data from the api
   useEffect(() => {
